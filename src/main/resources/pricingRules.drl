@@ -1,0 +1,31 @@
+package rules
+
+import com.acme.parking.inventory.model.Parking;
+import com.acme.parking.billing.model.Billing;
+import com.acme.parking.billing.model.PricingStrategy;
+
+function double limitPrecision(double value) {
+    return value * 100 / 100;
+}
+
+rule "Pricing Without Fixed Amount"
+when
+    parkingInformation: Parking()
+    pricingStrategy: PricingStrategy(strategy == "DURATION_ONLY")
+then
+	Billing billing = new Billing();
+    billing.setCurrency("EUR");
+    billing.setAmount(limitPrecision(parkingInformation.getDurationSeconds() * pricingStrategy.getPricePerSecond()));
+    insert(billing);
+end
+
+rule "Pricing With Fixed Amount"
+when
+    parkingInformation: Parking()
+    pricingStrategy: PricingStrategy(strategy == "WITH_FIXED_AMOUNT")
+then
+    Billing billing = new Billing();
+	billing.setCurrency("EUR");
+	billing.setAmount(limitPrecision(pricingStrategy.getFixedAmount() + parkingInformation.getDurationSeconds() * pricingStrategy.getPricePerSecond()));
+	insert(billing);
+end

@@ -1,58 +1,40 @@
-# How to host Swagger API documentation with GitHub Pages
-[<img alt="The blog of Peter Evans: How to Host Swagger Documentation With Github Pages" title="View blog post" src="https://peterevans.dev/img/blog-published-badge.svg">](https://peterevans.dev/posts/how-to-host-swagger-docs-with-github-pages/)
+# Toll Parking API Application
 
-This repository is a template for using the [Swagger UI](https://github.com/swagger-api/swagger-ui) to dynamically generate beautiful documentation for your API and host it for free with GitHub Pages.
+This is a sample project to demonstrate a toll parking API, powered by Spring Boot, Open API, Apache Kafka and JBoss Drools.
 
-The template will periodically auto-update the Swagger UI dependency and create a pull request. See the [GitHub Actions workflow here](.github/workflows/update-swagger.yml).
+API documentation is available in the [github pages](https://huseyin-kilic.github.io/toll-parking-api/).
 
-The example API specification used by this repository can be seen hosted at [https://peter-evans.github.io/swagger-github-pages](https://peter-evans.github.io/swagger-github-pages/).
+## Prerequisites 
 
-## Steps to use this template
+1. [JDK/JRE 11](https://maven.apache.org/install.html)
+2. [Apache maven (version > 3.6)](https://kafka.apache.org/quickstart)
+3. [Apache Kafka (version > 2.4) & Apache Zookeper (version > 3.6)](https://kafka.apache.org/quickstart)
 
-1. Click the `Use this template` button above to create a new repository from this template.
+## Steps to build & start the project
 
-2. Go to the settings for your repository at `https://github.com/{github-username}/{repository-name}/settings` and enable GitHub Pages.
+1. Start Zookeeper and Kafka servers as described in the [installation guide](https://kafka.apache.org/quickstart).
 
-    ![Headers](/screenshots/swagger-github-pages.png?raw=true)
+2. Clone the repository by `git clone https://github.com/huseyin-kilic/toll-parking-api.git`.
+
+3. Build the project with maven with the command `mvn clean package`.
     
-3. Browse to the Swagger documentation at `https://{github-username}.github.io/{repository-name}/`.
+4. Start the application `java -jar -DtypeGasolineCount=10 -DtypeKW20Count=10 -DtypeKW50Count=10 target/api-0.0.1-SNAPSHOT.jar`.
+Notice the 3 command line arguments `typeGasolineCount`, `typeKW20Count`, and `typeKW50Count`, representing the number of parking spaces to create for respective car types.
 
+## Steps to access to the API in local environment
 
-## Steps to manually configure in your own repository
+1. Once the application starts, you can browse to the Swagger documentation at `http://localhost:8080/swagger-ui.html`.
+ You can this Swagger UI to explore the API, see examples and inject messages.
 
-1. Download the latest stable release of the Swagger UI [here](https://github.com/swagger-api/swagger-ui/releases).
+2. API definition file is available in [YAML format](https://github.com/huseyin-kilic/toll-parking-api/blob/master/swagger.yaml).
 
-2. Extract the contents and copy the "dist" directory to the root of your repository.
+## Steps to implement API client 
 
-3. Move the file "index.html" from the directory "dist" to the root of your repository.
-    ```
-    mv dist/index.html .
-    ```
-    
-4. Copy the YAML specification file for your API to the root of your repository.
+1. Go to [Swagger Editor](https://editor.swagger.io/). 
 
-5. Edit [index.html](index.html) and change the `url` property to reference your local YAML file. 
-    ```javascript
-        const ui = SwaggerUIBundle({
-            url: "swagger.yaml",
-        ...
-    ```
-    Then fix any references to files in the "dist" directory.
-    ```html
-    ...
-    <link rel="stylesheet" type="text/css" href="dist/swagger-ui.css" >
-    <link rel="icon" type="image/png" href="dist/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="dist/favicon-16x16.png" sizes="16x16" />    
-    ...
-    <script src="dist/swagger-ui-bundle.js"> </script>
-    <script src="dist/swagger-ui-standalone-preset.js"> </script>    
-    ...
-    ```
-    
-6. Go to the settings for your repository at `https://github.com/{github-username}/{repository-name}/settings` and enable GitHub Pages.
+2. Copy & paste the [API definition file](https://github.com/huseyin-kilic/toll-parking-api/blob/master/swagger.yaml) to the editor on the left panel.
 
-    ![Headers](/screenshots/swagger-github-pages.png?raw=true)
-    
-7. Browse to the Swagger documentation at `https://{github-username}.github.io/{repository-name}/`.
+3. Click on the <i>Generate Client</i> option at the top of the page and choose your favorite programming language. 
+The client code will be generated automatically and will be downloaded as a compressed file.
 
-   The example API specification used by this repository can be seen hosted at [https://peter-evans.github.io/swagger-github-pages](https://peter-evans.github.io/swagger-github-pages/).
+  
