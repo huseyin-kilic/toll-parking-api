@@ -4,6 +4,8 @@ This is a sample project to demonstrate a toll parking API, powered by Spring Bo
 
 API documentation is available in the [github pages](https://huseyin-kilic.github.io/toll-parking-api/).
 
+[![Build Status](https://travis-ci.com/huseyin-kilic/toll-parking-api.svg?branch=master)](https://travis-ci.com/huseyin-kilic/toll-parking-api)
+
 ## Prerequisites 
 
 1. [JDK/JRE 11](https://maven.apache.org/install.html)
@@ -23,7 +25,7 @@ Notice the 3 command line arguments `typeGasolineCount`, `typeKW20Count`, and `t
 
 ## Steps to access to the API in local environment
 
-1. Once the application starts, you can browse to the Swagger documentation at `http://localhost:8080/swagger-ui.html`.
+1. Once the application starts, you can browse to the Swagger documentation at `http://localhost:8191/swagger-ui.html`.
  You can this Swagger UI to explore the API, see examples and inject messages.
 
 2. API definition file is available in [YAML format](https://github.com/huseyin-kilic/toll-parking-api/blob/master/swagger.yaml).
